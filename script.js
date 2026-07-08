@@ -1,4 +1,3 @@
-const menuButton = document.querySelector(".menu-button");
 const siteNav = document.querySelector(".site-nav");
 const lightbox = document.querySelector(".lightbox");
 const lightboxImage = lightbox.querySelector("img");
@@ -22,18 +21,6 @@ let activeGroupIndex = 0;
 let activeGroups = [{ items: galleryButtons }];
 let touchStartX = 0;
 let touchStartY = 0;
-
-menuButton?.addEventListener("click", () => {
-  const isOpen = siteNav.classList.toggle("is-open");
-  menuButton.setAttribute("aria-expanded", String(isOpen));
-});
-
-document.querySelectorAll(".site-nav a").forEach((link) => {
-  link.addEventListener("click", () => {
-    siteNav.classList.remove("is-open");
-    menuButton?.setAttribute("aria-expanded", "false");
-  });
-});
 
 function hideImages() {
   imageSections.forEach((section) => {
@@ -70,7 +57,7 @@ if (window.location.hash === "#info") {
 } else if (window.location.hash === "#works") {
   showWorks();
 } else {
-  showHome();
+  showWorks();
 }
 
 document.querySelectorAll('[data-view-link="home"]').forEach((link) => {
