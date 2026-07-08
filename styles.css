@@ -120,7 +120,7 @@ img {
 }
 
 .content {
-  width: min(100%, 1360px);
+  width: min(100%, 1560px);
   padding: 58px 90px 96px 88px;
 }
 
@@ -131,23 +131,12 @@ img {
 
 .hero-photo {
   position: relative;
-  width: min(100%, 1010px);
+  width: min(100%, 1380px);
   margin: 0;
 }
 
-.hero-photo figcaption {
-  position: absolute;
-  right: 14px;
-  bottom: 12px;
-  text-align: right;
-  color: #ffffff;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-}
-
 .hero-photo img {
-  height: min(66vh, 620px);
+  height: min(78vh, 820px);
   object-fit: cover;
 }
 
@@ -560,12 +549,6 @@ address {
     height: clamp(320px, calc(100dvh - 244px), 620px);
     min-height: 0;
     object-fit: cover;
-  }
-
-  .hero-photo figcaption {
-    right: 12px;
-    bottom: 10px;
-    color: #ffffff;
   }
 
   .work-overview {
