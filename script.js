@@ -10,6 +10,7 @@ const mobileCount = document.querySelector(".lightbox-count");
 const groupNextButton = document.querySelector(".lightbox-group-next");
 const galleryButtons = [...document.querySelectorAll(".photo-button")];
 const workCards = [...document.querySelectorAll(".work-card")];
+const visibleWorkCards = workCards.filter((card) => !card.classList.contains("work-card-hidden"));
 const workToggles = [...document.querySelectorAll(".work-toggle")];
 const infoBlock = document.querySelector(".info-block");
 const homeSection = document.querySelector(".home-index");
@@ -119,6 +120,7 @@ function updateNavVisibility() {
 
   if (mobileCount) {
     mobileCount.textContent = `${activeImageIndex + 1}/${activeGallery.length}`;
+    mobileCount.hidden = activeGallery.length <= 1;
   }
 
   if (groupNextButton) {
@@ -163,6 +165,22 @@ function buildGroups(items) {
   return groups;
 }
 
+function getWorkGroupName(item) {
+  return item.dataset.workGroup || item.getAttribute("href") || "";
+}
+
+function buildWorkGroups() {
+  return visibleWorkCards.map((cover) => {
+    const groupName = getWorkGroupName(cover);
+    const items = workCards.filter((item) => getWorkGroupName(item) === groupName);
+    return {
+      cover,
+      name: groupName,
+      items: items.length ? items : [cover],
+    };
+  });
+}
+
 function setActiveGroup(groups, groupIndex, imageIndex = 0) {
   activeGroups = groups.length ? groups : [{ items: activeGallery }];
   activeGroupIndex = (groupIndex + activeGroups.length) % activeGroups.length;
@@ -200,11 +218,11 @@ document.querySelectorAll("[data-open-gallery]").forEach((link) => {
   });
 });
 
-workCards.forEach((card, index) => {
+visibleWorkCards.forEach((card) => {
   card.addEventListener("click", (event) => {
     event.preventDefault();
-    const groups = buildGroups(workCards);
-    const groupIndex = groups.findIndex((group) => group.items.includes(card));
+    const groups = buildWorkGroups();
+    const groupIndex = groups.findIndex((group) => group.cover === card);
     const imageIndex = Math.max(groups[groupIndex].items.indexOf(card), 0);
     setActiveGroup(groups, groupIndex, imageIndex);
     lightbox.hidden = false;
@@ -253,7 +271,11 @@ function showSwipeImage(delta) {
 closeButton.addEventListener("click", closeLightbox);
 prevButton.addEventListener("click", showPreviousImage);
 nextButton.addEventListener("click", showNextImage);
-groupNextButton?.addEventListener("click", showNextGroup);
+groupNextButton?.addEventListener("click", (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  showNextGroup();
+});
 
 lightbox.addEventListener("touchstart", (event) => {
   const touch = event.touches[0];

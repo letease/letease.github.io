@@ -332,6 +332,24 @@ address {
 }
 
 .lightbox-mobile-ui {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  z-index: 11;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.lightbox-count {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.lightbox-group-next {
   display: none;
 }
 
@@ -558,26 +576,17 @@ address {
   }
 
   .lightbox-mobile-ui {
-    position: fixed;
     top: 24px;
-    left: 50%;
-    z-index: 11;
-    display: grid;
     grid-template-columns: 1fr auto 1fr;
-    align-items: center;
     width: calc(100vw - 112px);
-    transform: translateX(-50%);
-    pointer-events: none;
   }
 
   .lightbox-count {
     justify-self: start;
-    color: var(--muted);
-    font-size: 13px;
-    font-weight: 400;
   }
 
   .lightbox-group-next {
+    display: block;
     justify-self: center;
     padding: 0;
     border: 0;
