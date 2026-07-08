@@ -28,7 +28,13 @@ function hideImages() {
   });
 }
 
+function setPageView(viewName) {
+  document.body.classList.remove("home-view", "works-view", "info-view");
+  document.body.classList.add(`${viewName}-view`);
+}
+
 function showHome() {
+  setPageView("home");
   homeSection.hidden = false;
   overviewSection.hidden = true;
   hideImages();
@@ -37,6 +43,7 @@ function showHome() {
 }
 
 function showWorks() {
+  setPageView("works");
   homeSection.hidden = true;
   overviewSection.hidden = false;
   hideImages();
@@ -45,6 +52,7 @@ function showWorks() {
 }
 
 function showInfo() {
+  setPageView("info");
   homeSection.hidden = true;
   overviewSection.hidden = true;
   hideImages();
