@@ -106,6 +106,12 @@ img {
   cursor: pointer;
 }
 
+.work-toggle:hover,
+.work-toggle:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .work-list {
   display: grid;
   gap: 8px;
