@@ -22,6 +22,24 @@ let activeGroups = [{ items: galleryButtons }];
 let touchStartX = 0;
 let touchStartY = 0;
 
+function updateLightboxMetrics() {
+  if (lightbox.hidden || !lightboxImage.complete || !lightboxImage.naturalWidth) {
+    return;
+  }
+
+  requestAnimationFrame(() => {
+    const imageRect = lightboxImage.getBoundingClientRect();
+
+    if (!imageRect.width) {
+      return;
+    }
+
+    lightbox.style.setProperty("--lightbox-image-left", `${imageRect.left}px`);
+    lightbox.style.setProperty("--lightbox-image-width", `${imageRect.width}px`);
+    lightbox.style.setProperty("--lightbox-image-right", `${window.innerWidth - imageRect.right}px`);
+  });
+}
+
 function setWorkCardImageFit(card) {
   const image = card.querySelector("img");
 
@@ -153,9 +171,11 @@ function showImage(index) {
   activeImageIndex = (index + activeGallery.length) % activeGallery.length;
   const button = activeGallery[activeImageIndex];
   const image = button.querySelector("img");
+  lightboxImage.onload = updateLightboxMetrics;
   lightboxImage.src = image.dataset.fullSrc || image.src;
   lightboxImage.alt = image.alt;
   lightboxCaption.textContent = button.dataset.caption || image.alt || "";
+  updateLightboxMetrics();
   updateNavVisibility();
 }
 
@@ -219,6 +239,7 @@ function openGallery(galleryName, startButton = null) {
   const startIndex = startButton ? Math.max(selectedGallery.indexOf(startButton), 0) : 0;
   setActiveGroup([{ name: galleryName, items: selectedGallery }], 0, startIndex);
   lightbox.hidden = false;
+  updateLightboxMetrics();
   (activeGallery.length > 1 ? nextButton : closeButton).focus();
 }
 
@@ -247,6 +268,7 @@ visibleWorkCards.forEach((card) => {
     const imageIndex = Math.max(groups[groupIndex].items.indexOf(card), 0);
     setActiveGroup(groups, groupIndex, imageIndex);
     lightbox.hidden = false;
+    updateLightboxMetrics();
     closeButton.focus();
     history.replaceState(null, "", card.getAttribute("href"));
   });
@@ -254,6 +276,7 @@ visibleWorkCards.forEach((card) => {
 
 function closeLightbox() {
   lightbox.hidden = true;
+  lightboxImage.onload = null;
   lightboxImage.removeAttribute("src");
 }
 
@@ -339,3 +362,6 @@ window.addEventListener("keydown", (event) => {
     showNextImage();
   }
 });
+
+window.addEventListener("resize", updateLightboxMetrics);
+window.visualViewport?.addEventListener("resize", updateLightboxMetrics);

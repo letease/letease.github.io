@@ -314,6 +314,9 @@ address {
   display: flex;
   align-items: center;
   justify-content: center;
+  --lightbox-image-left: 24px;
+  --lightbox-image-width: calc(100vw - 48px);
+  --lightbox-image-right: 24px;
   padding: 52px 24px 34px;
   background: #ffffff;
 }
@@ -625,8 +628,10 @@ address {
 
   .lightbox-mobile-ui {
     top: 24px;
+    left: var(--lightbox-image-left);
     grid-template-columns: 1fr auto 1fr;
-    width: calc(100vw - 112px);
+    width: var(--lightbox-image-width);
+    transform: none;
   }
 
   .lightbox:not(.has-image-count) .lightbox-mobile-ui {
@@ -657,9 +662,10 @@ address {
   .lightbox-close {
     top: 18px;
     right: 18px;
+    right: max(18px, var(--lightbox-image-right));
     width: 36px;
     height: 36px;
-    font-size: 30px;
+    font-size: 0;
   }
 }
 
@@ -701,6 +707,6 @@ address {
   }
 
   .lightbox-mobile-ui {
-    width: calc(100vw - 92px);
+    width: var(--lightbox-image-width);
   }
 }
