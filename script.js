@@ -153,7 +153,7 @@ function showImage(index) {
   activeImageIndex = (index + activeGallery.length) % activeGallery.length;
   const button = activeGallery[activeImageIndex];
   const image = button.querySelector("img");
-  lightboxImage.src = image.src;
+  lightboxImage.src = image.dataset.fullSrc || image.src;
   lightboxImage.alt = image.alt;
   lightboxCaption.textContent = button.dataset.caption || image.alt || "";
   updateNavVisibility();
