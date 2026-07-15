@@ -40,6 +40,13 @@ function updateLightboxMetrics() {
   });
 }
 
+function updateLightboxImageOrientation() {
+  const isLandscape = lightboxImage.naturalWidth >= lightboxImage.naturalHeight;
+  lightbox.classList.toggle("lightbox-landscape", isLandscape);
+  lightbox.classList.toggle("lightbox-portrait", !isLandscape);
+  updateLightboxMetrics();
+}
+
 function setWorkCardImageFit(card) {
   const image = card.querySelector("img");
 
@@ -171,11 +178,16 @@ function showImage(index) {
   activeImageIndex = (index + activeGallery.length) % activeGallery.length;
   const button = activeGallery[activeImageIndex];
   const image = button.querySelector("img");
-  lightboxImage.onload = updateLightboxMetrics;
+  lightbox.classList.remove("lightbox-landscape", "lightbox-portrait");
+  lightboxImage.onload = updateLightboxImageOrientation;
   lightboxImage.src = image.dataset.fullSrc || image.src;
   lightboxImage.alt = image.alt;
   lightboxCaption.textContent = button.dataset.caption || image.alt || "";
-  updateLightboxMetrics();
+  if (lightboxImage.complete && lightboxImage.naturalWidth) {
+    updateLightboxImageOrientation();
+  } else {
+    updateLightboxMetrics();
+  }
   updateNavVisibility();
 }
 
@@ -278,6 +290,7 @@ function closeLightbox() {
   lightbox.hidden = true;
   lightboxImage.onload = null;
   lightboxImage.removeAttribute("src");
+  lightbox.classList.remove("lightbox-landscape", "lightbox-portrait");
 }
 
 function showPreviousImage() {

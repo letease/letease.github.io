@@ -1,3 +1,20 @@
+/* A font by Jos Buivenga (exljbris) -> www.exljbris.com */
+@font-face {
+  font-family: "Museo";
+  src: url("assets/fonts/museo/Museo300-Regular.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Museo";
+  src: url("assets/fonts/museo/Museo500-Regular.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --bg: #ffffff;
   --paper: #fffefb;
@@ -7,7 +24,7 @@
   --line: #e1ddd4;
   --focus: #8c765f;
   --nav-width: 220px;
-  --font-main: "Museo", "Museo Sans", Arial, Helvetica, sans-serif;
+  --font-main: "Museo", Georgia, "Times New Roman", serif;
 }
 
 * {
@@ -132,7 +149,7 @@ img {
 
 .content {
   width: min(100%, 1560px);
-  padding: 58px 90px 96px 88px;
+  padding: 94px 90px 96px 88px;
 }
 
 .home-index {
@@ -328,6 +345,8 @@ address {
   --lightbox-image-left: 24px;
   --lightbox-image-width: calc(100vw - 48px);
   --lightbox-image-right: 24px;
+  --lightbox-landscape-width: min(1680px, calc(100vw - 232px));
+  --lightbox-landscape-height: min(1120px, calc(100dvh - 124px));
   padding: 52px 24px 34px;
   background: #ffffff;
 }
@@ -343,6 +362,21 @@ address {
   margin: auto;
   object-fit: contain;
   box-shadow: none;
+}
+
+.lightbox.lightbox-landscape img {
+  width: var(--lightbox-landscape-width);
+  height: var(--lightbox-landscape-height);
+  max-width: var(--lightbox-landscape-width);
+  max-height: var(--lightbox-landscape-height);
+  object-fit: contain;
+}
+
+.lightbox.lightbox-portrait img {
+  width: auto;
+  height: auto;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100dvh - 100px);
 }
 
 .lightbox p {
@@ -629,6 +663,14 @@ address {
   }
 
   .lightbox img {
+    max-width: calc(100vw - 36px);
+    max-height: calc(100dvh - 130px);
+  }
+
+  .lightbox.lightbox-landscape img,
+  .lightbox.lightbox-portrait img {
+    width: auto;
+    height: auto;
     max-width: calc(100vw - 36px);
     max-height: calc(100dvh - 130px);
   }
