@@ -84,6 +84,7 @@ img {
   font-weight: 600;
   line-height: 1;
   letter-spacing: 0;
+  white-space: nowrap;
 }
 
 .side-nav,
@@ -516,6 +517,7 @@ address {
     font-weight: 600;
     line-height: 1;
     background: transparent;
+    white-space: nowrap;
     pointer-events: auto;
   }
 
